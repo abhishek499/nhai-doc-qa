@@ -21,6 +21,7 @@ import json
 import os
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 # ── Path setup ─────────────────────────────────────────────────────────────────
@@ -150,15 +151,20 @@ def judge_faithfulness(context: str, answer: str) -> tuple[float, str]:
         }],
     )
     raw = msg.content[0].text.strip()
+    # Strip markdown code fences if the model wraps the JSON
+    if raw.startswith("```"):
+        raw = raw.split("```", 2)[1]
+        if raw.startswith("json"):
+            raw = raw[4:]
+        raw = raw.strip()
     try:
         data = json.loads(raw)
         return float(data["score"]), str(data.get("reason", ""))
     except (json.JSONDecodeError, KeyError, ValueError):
-        # Fallback: try to extract a float from the raw response
         import re
         m = re.search(r'"score"\s*:\s*([0-9.]+)', raw)
         score = float(m.group(1)) if m else 0.5
-        return score, f"(parse error — raw: {raw[:80]})"
+        return score, f"(parse error - raw: {raw[:80]})"
 
 
 # ── Metric helpers ─────────────────────────────────────────────────────────────
@@ -281,6 +287,52 @@ def main() -> None:
             c_faith = sum(faiths[i] for i in idx) / len(idx)
             print(f"    {cat:<18}  Hit@k={c_hit:.2f}  MRR={c_mrr:.2f}  Faith={c_faith:.2f}  (n={len(idx)})")
         print()
+
+    # ── Save results to evals/ ────────────────────────────────────────────────
+    evals_dir = ROOT / "evals"
+    evals_dir.mkdir(exist_ok=True)
+
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    mode_slug = "dense" if args.dense_only else "hybrid"
+    out_path = evals_dir / f"results_{ts}_{mode_slug}_k{args.k}.json"
+
+    per_question = []
+    for i, item in enumerate(golden):
+        per_question.append({
+            "id":                 item["id"],
+            "category":           item["category"],
+            "question":           item["question"],
+            "expected_source":    item["expected_source"],
+            "hit":                hits[i],
+            "rr":                 rrs[i],
+            "faithfulness_score": faiths[i],
+        })
+
+    output = {
+        "run_at":          ts,
+        "mode":            mode_slug,
+        "k":               args.k,
+        "golden_set":      args.golden,
+        "n":               n,
+        "summary": {
+            f"hit_rate_at_{args.k}": round(avg_hit,   4),
+            "mrr":                   round(avg_mrr,   4),
+            "mean_faithfulness":     round(avg_faith, 4),
+        },
+        "per_category": {
+            cat: {
+                f"hit_rate_at_{args.k}": round(sum(hits[i]   for i in [j for j, it in enumerate(golden) if it["category"] == cat]) / len([j for j, it in enumerate(golden) if it["category"] == cat]), 4),
+                "mrr":                   round(sum(rrs[i]    for i in [j for j, it in enumerate(golden) if it["category"] == cat]) / len([j for j, it in enumerate(golden) if it["category"] == cat]), 4),
+                "mean_faithfulness":     round(sum(faiths[i] for i in [j for j, it in enumerate(golden) if it["category"] == cat]) / len([j for j, it in enumerate(golden) if it["category"] == cat]), 4),
+                "n":                     len([j for j, it in enumerate(golden) if it["category"] == cat]),
+            }
+            for cat in categories
+        },
+        "results": per_question,
+    }
+
+    out_path.write_text(json.dumps(output, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Results saved -> {out_path.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

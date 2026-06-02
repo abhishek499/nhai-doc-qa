@@ -1,0 +1,169 @@
+{
+  "run_at": "20260602T112157Z",
+  "mode": "dense",
+  "k": 5,
+  "golden_set": "D:\\Dev\\GenAI\\Doc-Reader\\eval\\golden_set.json",
+  "n": 15,
+  "summary": {
+    "hit_rate_at_5": 1.0,
+    "mrr": 0.8833,
+    "mean_faithfulness": 0.76
+  },
+  "per_category": {
+    "dense-policy": {
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "mean_faithfulness": 0.75,
+      "n": 4
+    },
+    "easy-citizen": {
+      "hit_rate_at_5": 1.0,
+      "mrr": 0.7812,
+      "mean_faithfulness": 0.675,
+      "n": 8
+    },
+    "medium": {
+      "hit_rate_at_5": 1.0,
+      "mrr": 1.0,
+      "mean_faithfulness": 1.0,
+      "n": 3
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "category": "easy-citizen",
+      "question": "What is FASTag and what technology does it use?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 0.5,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 2,
+      "category": "easy-citizen",
+      "question": "Is FASTag mandatory for all vehicles in India?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 0.5,
+      "faithfulness_score": 0.4
+    },
+    {
+      "id": 3,
+      "category": "easy-citizen",
+      "question": "What is the maximum regulated price of a FASTag including GST?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 4,
+      "category": "easy-citizen",
+      "question": "What is the validity period of a physical FASTag?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 0.0
+    },
+    {
+      "id": 5,
+      "category": "easy-citizen",
+      "question": "What penalty applies if a vehicle without FASTag uses a FASTag lane?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 0.25,
+      "faithfulness_score": 0.0
+    },
+    {
+      "id": 6,
+      "category": "easy-citizen",
+      "question": "How can NHAI FASTag users check their wallet balance via missed call?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 7,
+      "category": "easy-citizen",
+      "question": "What is the FASTag Annual Pass and how much does it cost?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 8,
+      "category": "easy-citizen",
+      "question": "Which vehicle types are eligible for the FASTag Annual Pass?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 9,
+      "category": "medium",
+      "question": "Can the FASTag Annual Pass be transferred to another vehicle?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 10,
+      "category": "medium",
+      "question": "Where can I purchase or activate the FASTag Annual Pass?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 11,
+      "category": "medium",
+      "question": "What is the monthly and annual wallet balance limit for FASTag with minimum KYC?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 12,
+      "category": "dense-policy",
+      "question": "Can the Annual Pass be activated on a FASTag registered using only a chassis number?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 13,
+      "category": "dense-policy",
+      "question": "What is the validity of an exempted FASTag for government vehicles versus private vehicles?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 14,
+      "category": "dense-policy",
+      "question": "What happens when ETC equipment at a toll plaza is not working and I have a valid FASTag with sufficient balance?",
+      "expected_source": "FAQ-FASTag.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 1.0
+    },
+    {
+      "id": 15,
+      "category": "dense-policy",
+      "question": "For a point-based fee plaza, how many Annual Pass trips does a round trip consume?",
+      "expected_source": "FAQ-Annual-Pass_12.08.25.pdf",
+      "hit": 1,
+      "rr": 1.0,
+      "faithfulness_score": 0.0
+    }
+  ]
+}
