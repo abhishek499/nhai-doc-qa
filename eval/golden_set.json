@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "category": "easy-citizen",
+    "question": "What is FASTag and what technology does it use?",
+    "expected_answer_gist": "FASTag is an RFID device affixed on the vehicle windscreen that enables cashless toll payments directly from a linked prepaid account while the vehicle is in motion.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 2,
+    "category": "easy-citizen",
+    "question": "Is FASTag mandatory for all vehicles in India?",
+    "expected_answer_gist": "Yes, FASTag is mandatory for all Class M and N vehicles (four-wheelers and above) w.e.f. 1 January 2021 as per CMVR 1989 amendments by MoRTH.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 3,
+    "category": "easy-citizen",
+    "question": "What is the maximum regulated price of a FASTag including GST?",
+    "expected_answer_gist": "The government has regulated the maximum FASTag price at Rs. 100 including GST, plus a security deposit of Rs. 200 and a first recharge of Rs. 200.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 4,
+    "category": "easy-citizen",
+    "question": "What is the validity period of a physical FASTag?",
+    "expected_answer_gist": "The physical FASTag has a validity of 5 years; after purchase you only need to recharge it as per usage.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 5,
+    "category": "easy-citizen",
+    "question": "What penalty applies if a vehicle without FASTag uses a FASTag lane?",
+    "expected_answer_gist": "A vehicle without a valid FASTag entering a FASTag lane is charged double the applicable toll amount in cash.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 6,
+    "category": "easy-citizen",
+    "question": "How can NHAI FASTag users check their wallet balance via missed call?",
+    "expected_answer_gist": "NHAI Prepaid Wallet users can check their balance by giving a missed call at +91-8884333331 (toll free, available round the clock).",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 7,
+    "category": "easy-citizen",
+    "question": "What is the FASTag Annual Pass and how much does it cost?",
+    "expected_answer_gist": "The Annual Pass allows free passage at National Highway and National Expressway fee plazas for one year or 200 trips (whichever is earlier) for Rs. 3,000.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  },
+  {
+    "id": 8,
+    "category": "easy-citizen",
+    "question": "Which vehicle types are eligible for the FASTag Annual Pass?",
+    "expected_answer_gist": "The Annual Pass is only for private non-commercial Car/Jeep/Van. Commercial vehicles are not eligible and use in a commercial vehicle causes immediate deactivation.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  },
+  {
+    "id": 9,
+    "category": "medium",
+    "question": "Can the FASTag Annual Pass be transferred to another vehicle?",
+    "expected_answer_gist": "No. The Annual Pass is non-transferable and valid only for the vehicle on which the FASTag is affixed and registered. Using it on another vehicle leads to deactivation.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  },
+  {
+    "id": 10,
+    "category": "medium",
+    "question": "Where can I purchase or activate the FASTag Annual Pass?",
+    "expected_answer_gist": "The Annual Pass can only be activated on the Rajmargyatra mobile application or the NHAI website, after verifying FASTag eligibility and paying Rs. 3,000.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  },
+  {
+    "id": 11,
+    "category": "medium",
+    "question": "What is the monthly and annual wallet balance limit for FASTag with minimum KYC?",
+    "expected_answer_gist": "For minimum KYC, the amount loaded during any month shall not exceed Rs. 10,000 and the total loaded during the financial year shall not exceed Rs. 1,00,000.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 12,
+    "category": "dense-policy",
+    "question": "Can the Annual Pass be activated on a FASTag registered using only a chassis number?",
+    "expected_answer_gist": "No. The Annual Pass cannot be issued on FASTags registered only with a chassis number. The Vehicle Registration Number (VRN) must be updated first.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  },
+  {
+    "id": 13,
+    "category": "dense-policy",
+    "question": "What is the validity of an exempted FASTag for government vehicles versus private vehicles?",
+    "expected_answer_gist": "An exempted FASTag is valid for 5 years for government vehicles and 1 year for private vehicles.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 14,
+    "category": "dense-policy",
+    "question": "What happens when ETC equipment at a toll plaza is not working and I have a valid FASTag with sufficient balance?",
+    "expected_answer_gist": "If ETC equipment is not working and the FASTag is valid with sufficient balance, the vehicle is permitted to pass the toll plaza free of cost.",
+    "expected_source": "FAQ-FASTag.pdf"
+  },
+  {
+    "id": 15,
+    "category": "dense-policy",
+    "question": "For a point-based fee plaza, how many Annual Pass trips does a round trip consume?",
+    "expected_answer_gist": "For point-based fee plazas, each crossing counts as one trip, so a round trip (to and fro) counts as two trips.",
+    "expected_source": "FAQ-Annual-Pass_12.08.25.pdf"
+  }
+]

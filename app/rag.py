@@ -23,24 +23,35 @@ from app import store
 MODEL_ID = "claude-haiku-4-5-20251001"
 TOP_K = int(os.getenv("TOP_K", "5"))
 
+# Keep this many past exchanges (user + assistant turns each count as 1).
+# 3 exchanges = 6 messages — enough for follow-ups without bloating the prompt.
+MAX_HISTORY_EXCHANGES = 3
+
 SYSTEM_PROMPT = (
-    "You are a precise document assistant for NHAI (National Highways Authority of India) documents. "
-    "Your ONLY job is to answer questions using the context excerpts provided by the user.\n\n"
+    "You are a precise document assistant for NHAI (National Highways Authority of India) documents.\n\n"
     "Rules you MUST follow without exception:\n"
-    "1. Answer ONLY from the provided context. Never use outside knowledge.\n"
-    "2. Cite every claim inline using the exact tags already present in the context, "
+    "1. Answer ONLY from the context excerpts in the CURRENT user message. Never use outside knowledge.\n"
+    "2. You may use the conversation history to understand follow-up questions and resolve pronouns, "
+    "but all factual claims must be grounded in the CURRENT context excerpts — not in your prior answers.\n"
+    "3. Cite every claim inline using the exact tags present in the current context, "
     "e.g. [Annual_Report_2023.pdf p.12].\n"
-    "3. If the context does not contain enough information to answer the question, "
+    "4. If the current context does not contain enough information to answer, "
     'respond EXACTLY with: "I don\'t know based on the provided documents."\n'
-    "4. Do not speculate, infer beyond the text, add disclaimers, or pad your response."
+    "5. Do not speculate, infer beyond the text, add disclaimers, or pad your response."
 )
 
 
-def answer(question: str) -> dict:
+def answer(question: str, history: list[dict] | None = None) -> dict:
     """
-    Retrieve top-K chunks, build a grounded prompt, call Claude, and return
+    Retrieve top-K chunks, build a grounded multi-turn prompt, call Claude, and return
     {answer: str, sources: list[{filename, page, snippet}]}.
+
+    history — list of {role: "user"|"assistant", content: str} from the client.
+    Past turns are included as plain Q&A (no RAG context) so Claude can resolve
+    follow-up pronouns and references.  Fresh context is injected only into the
+    current user turn, keeping history compact.
     """
+    history = history or []
     chunks = store.search(question, k=TOP_K)
 
     if not chunks:
@@ -56,7 +67,15 @@ def answer(question: str) -> dict:
         context_parts.append(f"{tag}\n{chunk['text']}")
     context = "\n\n---\n\n".join(context_parts)
 
-    user_message = f"Context:\n\n{context}\n\nQuestion: {question}"
+    # Build the messages list:
+    #   [past Q&A pairs (plain)] + [current question with fresh RAG context]
+    # Capped at MAX_HISTORY_EXCHANGES exchanges to avoid context overflow.
+    max_msgs = MAX_HISTORY_EXCHANGES * 2  # each exchange = 1 user + 1 assistant msg
+    messages: list[dict] = [
+        {"role": m["role"], "content": m["content"]}
+        for m in history[-max_msgs:]
+    ]
+    messages.append({"role": "user", "content": f"Context:\n\n{context}\n\nQuestion: {question}"})
 
     client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
     response = client.messages.create(
@@ -64,12 +83,11 @@ def answer(question: str) -> dict:
         max_tokens=1024,
         temperature=0.1,
         system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_message}],
+        messages=messages,
     )
 
     answer_text = response.content[0].text
 
-    # Build sources from the retrieved chunks (snippet = first 200 chars of the chunk)
     sources = []
     for chunk in chunks:
         snippet = chunk["text"][:200]

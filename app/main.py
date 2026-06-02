@@ -39,8 +39,13 @@ app = FastAPI(title="NHAI Document Q&A Assistant", lifespan=lifespan)
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
 
+class HistoryMessage(BaseModel):
+    role: str       # "user" or "assistant"
+    content: str
+
 class AskRequest(BaseModel):
     question: str
+    history: list[HistoryMessage] = []
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -65,7 +70,10 @@ async def ask(request: AskRequest):
         raise HTTPException(status_code=400, detail="Question must not be empty.")
 
     from app import rag
-    result = rag.answer(request.question)
+    result = rag.answer(
+        request.question,
+        history=[m.model_dump() for m in request.history],
+    )
     return result
 
 
